@@ -49,3 +49,9 @@ cursor.execute("SELECT * FROM FRUIT_LOAD_LIST")
 my_data_row = cursor.fetchall()
 streamlit.header("Fruit list: ")
 streamlit.dataframe(my_data_row)
+
+fruit_add = streamlit.text_input("Fruit to add:", "jackfruit")
+cursor.execute(
+        "INSERT INTO FRUIT_LOAD_LIST VALUE "
+        "({}, {})".format(len(my_data_row, fruit_add))
+)
