@@ -46,9 +46,9 @@ try:
 except URLError as e:
     streamlit.error(e)
 
+my_cnx = connector.connect(**streamlit.secrets["snowflake"])
+cursor = my_cnx.cursor()
 if streamlit.button("Get fruit load list"):
-    my_cnx = connector.connect(**streamlit.secrets["snowflake"])
-    cursor = my_cnx.cursor()
     cursor.execute("SELECT * FROM FRUIT_LOAD_LIST")
     my_data_row = cursor.fetchall()
     streamlit.header("Fruit list: ")
