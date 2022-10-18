@@ -3,6 +3,7 @@ import requests
 import streamlit
 import pandas as pd
 from snowflake import connector
+from urllib.error import URLError
 
 FRUIT_LIST_PATH = "https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/"\
                   "fruit_macros.txt"
@@ -32,23 +33,26 @@ fruit_choice = streamlit.text_input(
     "What fruit would you like information about",
     "Kiwi"
 )
-fruitvyce_response = requests.get("{}/{}".format(
-    FRUITYVICE_ENDPOINT,
-    fruit_choice)
-)
-fruitvyce_normalized_df = pd.json_normalize(fruitvyce_response.json())
-streamlit.dataframe(fruitvyce_normalized_df)
+try:
+    if not fruit_choice:
+        streamlit.error("Select a fruit")
+    else:
+        fruitvyce_response = requests.get("{}/{}".format(
+            FRUITYVICE_ENDPOINT,
+            fruit_choice)
+        )
+        fruitvyce_normalized_df = pd.json_normalize(fruitvyce_response.json())
+        streamlit.dataframe(fruitvyce_normalized_df)
+except URLError as e:
+    streamlit.error(e)
 
-my_cnx = connector.connect(**streamlit.secrets["snowflake"])
-cursor = my_cnx.cursor()
-cursor.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
-my_data_row = cursor.fetchone()
-streamlit.text("Hello from snowflake: {}".format(my_data_row))
-
-cursor.execute("SELECT * FROM FRUIT_LOAD_LIST")
-my_data_row = cursor.fetchall()
-streamlit.header("Fruit list: ")
-streamlit.dataframe(my_data_row)
+if streamlit.button("Get fruit load list"):
+    my_cnx = connector.connect(**streamlit.secrets["snowflake"])
+    cursor = my_cnx.cursor()
+    cursor.execute("SELECT * FROM FRUIT_LOAD_LIST")
+    my_data_row = cursor.fetchall()
+    streamlit.header("Fruit list: ")
+    streamlit.dataframe(my_data_row)
 
 fruit_add = streamlit.text_input("Fruit to add:")
 if fruit_add:
