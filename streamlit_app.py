@@ -12,5 +12,5 @@ streamlit.text("Kale, Spinach and Rocket Smoothie")
 streamlit.text("Hard-Boiled Free-Range Egg")
 
 streamlit.header("Build your own Fruit Smoothie")
-my_fruit_df = pd.reac_csv(FRUIT_LIST_PATH)
+my_fruit_df = pd.read_csv(FRUIT_LIST_PATH)
 streamlit.dataframe(my_fruit_df)
