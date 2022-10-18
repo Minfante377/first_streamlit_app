@@ -46,5 +46,6 @@ my_data_row = cursor.fetchone()
 streamlit.text("Hello from snowflake: {}".format(my_data_row))
 
 cursor.execute("SELECT * FROM FRUIT_LOAD_LIST")
-my_data_row = cursor.fetchone()
-streamlit.text("Fruit list: {}".format(my_data_row))
+my_data_row = cursor.fetchall()
+streamlit.header("Fruit list: ")
+streamlit.dataframe(my_data_row)
