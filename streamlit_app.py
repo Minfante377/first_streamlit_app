@@ -2,6 +2,7 @@ import requests
 
 import streamlit
 import pandas as pd
+from snowflake import connector
 
 FRUIT_LIST_PATH = "https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/"\
                   "fruit_macros.txt"
@@ -37,3 +38,9 @@ fruitvyce_response = requests.get("{}/{}".format(
 )
 fruitvyce_normalized_df = pd.json_normalize(fruitvyce_response.json())
 streamlit.dataframe(fruitvyce_normalized_df)
+
+my_cnx = connector.connect(**streamlit.secrets["snowflake"])
+cursor = my_cnx.cursor()
+cursor.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_data_row = cursor.fetchone()
+streamlit.text("Hello from snowflake: {}".format(my_data_row))
