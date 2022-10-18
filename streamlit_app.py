@@ -5,7 +5,7 @@ import pandas as pd
 
 FRUIT_LIST_PATH = "https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/"\
                   "fruit_macros.txt"
-FRUITYVICE_ENDPOINT = "https://fruitivyce.com/api/fruit"
+FRUITYVICE_ENDPOINT = "https://fruityvice.com/api/fruit"
 
 streamlit.title("My Parents New Healthy Dinner")
 
