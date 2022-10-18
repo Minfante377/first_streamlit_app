@@ -1,8 +1,11 @@
+import requests
+
 import streamlit
 import pandas as pd
 
 FRUIT_LIST_PATH = "https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/"\
                   "fruit_macros.txt"
+FRUITYVICE_ENDPOINT = "https://fruitivyce.com/api/fruit"
 
 streamlit.title("My Parents New Healthy Dinner")
 
@@ -22,3 +25,6 @@ fruits_selected = streamlit.multiselect(
 )
 fruits_to_show_df = my_fruit_df.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show_df)
+
+fruitvyce_response = requests.get("{}/watermelon".format(FRUITYVICE_ENDPOINT))
+streamlit.text(fruitvyce_response)
