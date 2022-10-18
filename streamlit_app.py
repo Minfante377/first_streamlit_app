@@ -53,5 +53,5 @@ streamlit.dataframe(my_data_row)
 fruit_add = streamlit.text_input("Fruit to add:", "jackfruit")
 cursor.execute(
         "INSERT INTO FRUIT_LOAD_LIST (FRUIT_NAME) VALUES "
-        "({})".format(fruit_add)
+        "('{}')".format(fruit_add)
 )
