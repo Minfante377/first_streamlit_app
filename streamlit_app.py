@@ -27,4 +27,4 @@ fruits_to_show_df = my_fruit_df.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show_df)
 
 fruitvyce_response = requests.get("{}/watermelon".format(FRUITYVICE_ENDPOINT))
-streamlit.text(fruitvyce_response)
+streamlit.text(fruitvyce_response.json())
