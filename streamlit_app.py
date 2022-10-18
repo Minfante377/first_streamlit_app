@@ -16,5 +16,9 @@ streamlit.header("Build your own Fruit Smoothie")
 my_fruit_df = pd.read_csv(FRUIT_LIST_PATH)
 my_fruit_df = my_fruit_df.set_index("Fruit")
 
-streamlit.multiselect("Pick some fruits:", list(my_fruit_df.index))
-streamlit.dataframe(my_fruit_df)
+fruits_selected = streamlit.multiselect(
+    "Pick some fruits:",
+    list(my_fruit_df.index)
+)
+fruits_to_show_df = my_fruit_df.loc[fruits_selected]
+streamlit.dataframe(fruits_to_show_df)
